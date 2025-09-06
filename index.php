@@ -52,6 +52,7 @@
 /* Fade-in effect for image */
 .left img {
   opacity: 0;
+  
   transform: translateX(-50px);
   transition: all 0.8s ease-in-out;
 }
@@ -317,16 +318,7 @@ $chunks = array_chunk($products, 4);
 
 <!-- Featured Products -->
 
- <?php
-   $featured= $conn->query ("SELECT * FROM featured_products ORDER BY no DESC LIMIT 4");
-      
-     $products = [];
-while ($row = $featured->fetch_assoc()) {
-    $products[] = $row;
-}
-
  
-?>
 
    <!-- Featured Products -->
 
@@ -381,10 +373,94 @@ while ($row = $featured->fetch_assoc()) {
        </div>
 
  </div>
+<?php 
+
+   $edit=$conn->query("SELECT * FROM editors_pic ORDER BY no DESC LIMIT 4");
+   $products=[]; 
+   while($row =$edit->fetch_assoc()){
+    $products[] =$row;
+   }
+  
 
 
 
- 
+?>
+<div class="container py-5">
+  <!-- Tabs -->
+  <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+  
+    <button class="nav-link active fw-bold" id="editors-tab"  data-bs-target="#editors" type="button" role="tab">
+        Editors Pick
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link fw-bold" id="two-tab" data-bs-toggle="tab" data-bs-target="#two" type="button" role="tab">
+        Two
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link fw-bold" id="three-tab" data-bs-toggle="tab" data-bs-target="#three" type="button" role="tab">
+        Three
+      </button>
+    </li>
+  </ul>
+
+  <!-- Tab Content -->
+  <div class="tab-pane fade show active" id="editors" role="tabpanel">
+  <div class="row">
+    <?php foreach ($products as $row): ?>
+      <div class="col-md-3 mb-4">
+        <div class="card shadow-sm">
+          <img src="<?= htmlspecialchars($row['pic']) ?>" 
+               class="card-img-top" 
+               alt="<?= htmlspecialchars($row['title']) ?>">
+          <div class="card-body">
+            <h5 class="card-title"><?= htmlspecialchars($row['title']) ?></h5>
+            <p class="card-text"><?= htmlspecialchars($row['description']) ?></p>
+          </div>
+        </div>
+      </div>
+    <?php endforeach; ?>
+  </div>
+</div>
+
+    <!-- Two -->
+<div class="tab-pane fade" id="two" role="tabpanel">
+  <div class="row">
+    <?php foreach ($products as $row): ?>
+      <div class="col-md-3 mb-4">
+        <div class="card shadow-sm">
+          <img src="<?= htmlspecialchars($row['pic']) ?>" 
+               class="card-img-top" 
+               alt="<?= htmlspecialchars($row['title']) ?>">
+          <div class="card-body">
+            <h5 class="card-title">Product A</h5>
+            <p class="card-text"><?= htmlspecialchars($row['title']) ?></p>
+          </div>
+        </div>
+      </div>
+    <?php endforeach; ?>
+  </div>
+</div>
+
+
+    <!-- Three -->
+    <div class="tab-pane fade" id="three" role="tabpanel">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="card shadow-sm">
+            <img src="images/22.jpeg" class="card-img-top" alt="">
+            <div class="card-body">
+              <h5 class="card-title">Product X</h5>
+              <p class="card-text">Short description.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
