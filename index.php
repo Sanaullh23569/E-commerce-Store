@@ -19,6 +19,7 @@
 
     
     }
+    
     .card-bg {
     background-repeat: no-repeat;
     background-size: cover;
@@ -48,8 +49,30 @@
 }
 
 
+/* Fade-in effect for image */
+.left img {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: all 0.8s ease-in-out;
+}
 
+.left img.show {
+  opacity: 1;
+  transform: translateX(0);
+}
 
+/* Fade-in effect for text */
+.col-md-6 {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-in-out;
+}
+
+.col-md-6.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+ 
   </style>
 </head>
 <body>
@@ -212,16 +235,6 @@ if (!$result) {
 ?>
 
   <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
-<?php
-// Fetch products
-$products = [];
-while($row = $result->fetch_assoc()){
-    $products[] = $row;
-}
-
-// Split into slides (4 per slide)
-$chunks = array_chunk($products, 4);
-?>
 
 <?php
 // Database connection (adjust credentials)
@@ -303,11 +316,76 @@ $chunks = array_chunk($products, 4);
 
 
 <!-- Featured Products -->
-   <div class="container py-5 ">
-      <h2 class="mb-3 text-center">Featured Products </h2>
-             <p>Magnis de darturien eros laciniados de cosmopolis dinterdum</p>
 
-   </div>
+ <?php
+   $featured= $conn->query ("SELECT * FROM featured_products ORDER BY no DESC LIMIT 4");
+      
+     $products = [];
+while ($row = $featured->fetch_assoc()) {
+    $products[] = $row;
+}
+
+ 
+?>
+
+   <!-- Featured Products -->
+
+<div class="container py-5">
+  <div class="row align-items-center">
+    <div class="left col-md-6 mb-4 mb-md-0">
+      <img src="images/20.jpeg" alt="Product Image" 
+           class="img-fluid rounded-3 shadow-lg">
+    </div>
+    <div class="col-md-6">
+      <h3 class="fw-bold text-uppercase text-primary mb-2">#Featured</h3>
+      <h2 class="display-5 fw-bold mb-3">Milancelos</h2>
+      <p class="text-muted lh-lg mb-4">
+        Pellentesque posuere orci lobortis scelerisque blandit. Donec id tellus lacinia an,
+        tincidunt risus ac, consequat velit.
+      </p>
+      <button class="btn btn-dark btn-lg rounded-pill shadow-sm px-4">
+        Shop Now
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Scroll animation trigger
+  window.addEventListener("scroll", () => {
+    document.querySelectorAll(".left img, .col-md-6").forEach(el => {
+      let pos = el.getBoundingClientRect().top;
+      if (pos < window.innerHeight - 100) {
+        el.classList.add("show");
+      }
+    });
+  });
+</script>
+ <div class="container-fluid">
+      
+       <div class="row mb-3">
+            <div class="col-md-6  d-flex flex-column justify-content-center  p-5">
+            <h3 class="text-uppercase text-primary fw-bold mb-2">Featured</h3>
+<h2 class="display-4 fw-bold mb-3">Milancelos</h2>
+<p class="text-muted lh-lg mb-4">
+  Pellentesque posuere orci lobortis scelerisque blandit. Donec id tellus lacinia an,
+  tincidunt risus ac, consequat velit. Quisquemos sodales suscipit tortor ditaemcos condimentum 
+  lacus meleifend menean viverra auctor blanditos comodous.
+</p>
+<button class="btn btn-dark rounded-pill btn-lg shadow-sm px-3 col-md-3 mt-3">Shop Now</button>
+
+           </div>
+            <div class="col-md-6 p-0">
+               <img src="Images/21.jpg" alt="" class="w-100 h-100 object-fit-cover">
+            </div>
+       </div>
+
+ </div>
+
+
+
+ 
+
 </body>
 </html>
 
