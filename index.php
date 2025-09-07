@@ -19,7 +19,27 @@
 
     
     }
-    
+    footer h5 {
+  letter-spacing: 1px;
+}
+
+footer ul li a:hover {
+  color: #f8f9fa !important; /* hover effect */
+  padding-left: 5px;
+  transition: 0.3s;
+}
+
+body {
+  overflow-x: hidden;
+}   
+.hover-scale {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hover-scale:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 8px 20px rgba(0,0,0,0.2);
+}
+
     .card-bg {
     background-repeat: no-repeat;
     background-size: cover;
@@ -52,7 +72,6 @@
 /* Fade-in effect for image */
 .left img {
   opacity: 0;
-  
   transform: translateX(-50px);
   transition: all 0.8s ease-in-out;
 }
@@ -73,6 +92,79 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+
+/* Mobile screens (max 576px) */
+@media screen and (max-width: 576px) {
+  .pic img,
+  .col-md-6 img {
+    width: 100% !important;  /* full width of container */
+    max-width: 300px;        /* ya jitni chhoti rakhni ho */
+    height: auto;            /* maintain aspect ratio */
+  }
+
+  .you {
+    background-color:white !important; /* Bootstrap primary blue, ya koi bhi color */
+  }
+
+
+}
+
+
+
+
+
+/* Foooter */
+  footer {
+    background: linear-gradient(180deg, #0D0D0D, #1A1A1A); /* Gradient dark */
+    color: #B0B0B0;
+  }
+
+  footer h5, footer h6 {
+    color: #FFD700; /* Gold headings */
+  }
+
+  footer a {
+    color: #B0B0B0;
+    transition: color 0.3s ease;
+  }
+
+  footer a:hover {
+    color: #FFD700; /* Gold on hover */
+  }
+
+  footer .btn-primary {
+    background-color: #FFD700;
+    border: none;
+    color: #0D0D0D;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+
+  footer .btn-primary:hover {
+    background-color: #B8860B; /* Darker gold */
+    color: #fff;
+  }
+
+  footer .bi {
+    transition: color 0.3s ease;
+  }
+
+  footer .bi:hover {
+    color: #FFD700;
+  }
+
+  footer .footer-bottom {
+    border-top: 1px solid #333;
+    color: #888;
+  }
+
+  footer .footer-bottom span {
+    color: #FFD700;
+    font-weight: 500;
+  }
+
+
  
   </style>
 </head>
@@ -374,81 +466,82 @@ $chunks = array_chunk($products, 4);
 
  </div>
 <?php 
-
-   $edit=$conn->query("SELECT * FROM editors_pic ORDER BY no DESC LIMIT 4");
-   $products=[]; 
-   while($row =$edit->fetch_assoc()){
-    $products[] =$row;
+   $edit = $conn->query("SELECT * FROM editors_pic ORDER BY no DESC LIMIT 4");
+   $products = []; 
+   while($row = $edit->fetch_assoc()){
+       $products[] = $row;
    }
-  
-
-
-
 ?>
 <div class="container py-5">
   <!-- Tabs -->
   <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
-  
-    <button class="nav-link active fw-bold" id="editors-tab"  data-bs-target="#editors" type="button" role="tab">
+      <button class="nav-link active fw-bold" id="editors-tab" 
+              data-bs-toggle="tab" data-bs-target="#editors" 
+              type="button" role="tab">
         Editors Pick
       </button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link fw-bold" id="two-tab" data-bs-toggle="tab" data-bs-target="#two" type="button" role="tab">
+      <button class="nav-link fw-bold" id="two-tab" 
+              data-bs-toggle="tab" data-bs-target="#two" 
+              type="button" role="tab">
         Two
       </button>
     </li>
     <li class="nav-item" role="presentation">
-      <button class="nav-link fw-bold" id="three-tab" data-bs-toggle="tab" data-bs-target="#three" type="button" role="tab">
+      <button class="nav-link fw-bold" id="three-tab" 
+              data-bs-toggle="tab" data-bs-target="#three" 
+              type="button" role="tab">
         Three
       </button>
     </li>
   </ul>
 
-  <!-- Tab Content -->
-  <div class="tab-pane fade show active" id="editors" role="tabpanel">
-  <div class="row">
-    <?php foreach ($products as $row): ?>
-      <div class="col-md-3 mb-4">
-        <div class="card shadow-sm">
-          <img src="<?= htmlspecialchars($row['pic']) ?>" 
-               class="card-img-top" 
-               alt="<?= htmlspecialchars($row['title']) ?>">
-          <div class="card-body">
-            <h5 class="card-title"><?= htmlspecialchars($row['title']) ?></h5>
-            <p class="card-text"><?= htmlspecialchars($row['description']) ?></p>
+  <!-- Tab Content (sab tab-pane isi div ke andar honi chahiye) -->
+  <div class="tab-content mt-4" id="myTabContent">
+    
+    <!-- Editors -->
+    <div class="tab-pane fade show active" id="editors" role="tabpanel" aria-labelledby="editors-tab">
+      <div class="row">
+        <?php foreach ($products as $row): ?>
+          <div class="col-md-3 mb-4">
+            <div class="card shadow-sm">
+              <img src="<?= htmlspecialchars($row['pic']) ?>" 
+                   class="card-img-top" 
+                   alt="<?= htmlspecialchars($row['title']) ?>">
+              <div class="card-body">
+                <h5 class="card-title"><?= htmlspecialchars($row['title']) ?></h5>
+                <p class="card-text"><?= htmlspecialchars($row['description']) ?></p>
+              </div>
+            </div>
           </div>
-        </div>
+        <?php endforeach; ?>
       </div>
-    <?php endforeach; ?>
-  </div>
-</div>
+    </div>
 
     <!-- Two -->
-<div class="tab-pane fade" id="two" role="tabpanel">
-  <div class="row">
-    <?php foreach ($products as $row): ?>
-      <div class="col-md-3 mb-4">
-        <div class="card shadow-sm">
-          <img src="<?= htmlspecialchars($row['pic']) ?>" 
-               class="card-img-top" 
-               alt="<?= htmlspecialchars($row['title']) ?>">
-          <div class="card-body">
-            <h5 class="card-title">Product A</h5>
-            <p class="card-text"><?= htmlspecialchars($row['title']) ?></p>
+    <div class="tab-pane fade" id="two" role="tabpanel" aria-labelledby="two-tab">
+      <div class="row">
+        <?php foreach ($products as $row): ?>
+          <div class="col-md-3 mb-4">
+            <div class="card shadow-sm">
+              <img src="<?= htmlspecialchars($row['pic']) ?>" 
+                   class="card-img-top" 
+                   alt="<?= htmlspecialchars($row['title']) ?>">
+              <div class="card-body">
+                <p class="card-text"><?= htmlspecialchars($row['title']) ?></p>
+              </div>
+            </div>
           </div>
-        </div>
+        <?php endforeach; ?>
       </div>
-    <?php endforeach; ?>
-  </div>
-</div>
-
+    </div>
 
     <!-- Three -->
-    <div class="tab-pane fade" id="three" role="tabpanel">
+    <div class="tab-pane fade" id="three" role="tabpanel" aria-labelledby="three-tab">
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3 mb-4">
           <div class="card shadow-sm">
             <img src="images/22.jpeg" class="card-img-top" alt="">
             <div class="card-body">
@@ -459,8 +552,146 @@ $chunks = array_chunk($products, 4);
         </div>
       </div>
     </div>
+
+  </div> <!-- End Tab Content -->
+</div>
+
+ <div class="container ">
+     <h3 class="text-center">Custom CMS BLOCK </h3>
+       <div class="row g-4 d-flex flex-row  mb-5">
+      <div class="pic col-md-6 text-center">
+             
+        
+           <img src="images/22.jpg" alt="">
+              <p>Pellentesque posuere morci lobortis scelerisque de blandit.</p>
+              <p>Nullam aliquet vestibulum augue non varius. Cras nec congue elitos. Duis tristique del ante nec aliquam. 
+                Praesent urna tellus laoreet an tellus ullamcorper fermentum facilisis eratum...</p>
+                <button class="btn bg-black text-white ">SHOP NOW</button>
+      </div>
+        <div class="col-md-6 text-center col-12">
+              <img src="images/23.jpg" class="w-80" alt="" style="width:35rem;">
+              <p class="text-center ">Pellentesque posuere morci lobortis scelerisque de blandit.</p>
+                         <p>Nullam aliquet vestibulum augue non varius. Cras nec congue elitos. Duis tristique del ante nec aliquam. 
+                Praesent urna tellus laoreet an tellus ullamcorper fermentum facilisis eratum...</p>
+                <button class="btn bg-black text-white ">SHOP NOW</button>
+        </div>
+ </div> 
+        </div>
+
+
+      <div class="container my-5"> 
+  <div class="you row bg-dark text-center justify-content-center align-items-center py-5 rounded shadow">
+    
+    <!-- Heading -->
+    <div class="you col-12 mb-4 ">
+      <h2 class="text-uppercase fw-bold text-white">Shop Over Top Brands</h2>
+      <div class="mx-auto mb-3" style="width:80px; height:3px; background:#f8c146; border-radius:5px;"></div>
+    </div>
+    
+    <!-- Brand Logos -->
+    <div class="col-auto mx-3">
+      <div class="p-3 bg-white rounded-3 shadow-sm hover-scale">
+        <img src="images/24.png" alt="Isabela" class="img-fluid" style="max-height:60px;">
+      </div>
+    </div>
+    
+    <div class="col-auto mx-3">
+      <div class="p-3 bg-white rounded-3 shadow-sm hover-scale">
+        <img src="images/25.png" alt="Magcof" class="img-fluid" style="max-height:60px;">
+      </div>
+    </div>
+    
+    <div class="col-auto mx-3">
+      <div class="p-3 bg-white rounded-3 shadow-sm hover-scale">
+        <img src="images/26.png" alt="Third Brand" class="img-fluid" style="max-height:60px;">
+      </div>
+    </div>
+    
   </div>
 </div>
+
+
+
+
+
+
+<footer class="bg-dark text-white pt-5 pb-3">
+  <div class="container">
+    <div class="row">
+
+      <!-- Shop Column -->
+      <div class="col-md-3 mb-4">
+        <h5 class="fw-bold text-uppercase">Shop</h5>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-decoration-none text-white-50">Trend Now</a></li>
+          <li><a href="#" class="text-decoration-none text-white-50">Fragrance</a></li>
+          <li><a href="#" class="text-decoration-none text-white-50">Makeup</a></li>
+          <li><a href="#" class="text-decoration-none text-white-50">Nail</a></li>
+          <li><a href="#" class="text-decoration-none text-white-50">Beauty Accessories</a></li>
+        </ul>
+      </div>
+
+      <!-- Information Column -->
+      <div class="col-md-3 mb-4">
+        <h5 class="fw-bold text-uppercase">Information</h5>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-decoration-none text-white-50">About Us</a></li>
+          <li><a href="#" class="text-decoration-none text-white-50">Theme FAQs</a></li>
+          <li><a href="#" class="text-decoration-none text-white-50">New Collections</a></li>
+          <li><a href="#" class="text-decoration-none text-white-50">Best Sellers</a></li>
+          <li><a href="#" class="text-decoration-none text-white-50">Manufacturers</a></li>
+          <li><a href="#" class="text-decoration-none text-white-50">Privacy Policy</a></li>
+          <li><a href="#" class="text-decoration-none text-white-50">Terms & Conditions</a></li>
+          <li><a href="#" class="text-decoration-none text-white-50">Gift Certificates</a></li>
+        </ul>
+      </div>
+
+      <!-- Customer Service Column -->
+      <div class="col-md-3 mb-4">
+        <h5 class="fw-bold text-uppercase">Customer Service</h5>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-decoration-none text-white-50">Search Terms</a></li>
+          <li><a href="#" class="text-decoration-none text-white-50">Advanced Search</a></li>
+          <li><a href="#" class="text-decoration-none text-white-50">Orders and Returns</a></li>
+          <li><a href="#" class="text-decoration-none text-white-50">Contact Us</a></li>
+          <li><a href="#" class="text-decoration-none text-white-50">RSS</a></li>
+          <li><a href="#" class="text-decoration-none text-white-50">Help & FAQs</a></li>
+          <li><a href="#" class="text-decoration-none text-white-50">Consultant</a></li>
+          <li><a href="#" class="text-decoration-none text-white-50">Store Locations</a></li>
+        </ul>
+      </div>
+
+      <!-- Newsletter Column -->
+      <div class="col-md-3 mb-4">
+        <h5 class="fw-bold text-uppercase">Newsletter Sign Up</h5>
+        <p class="text-white-50 small">Receive our latest updates about our products and promotions.</p>
+        
+        <form class="d-flex mb-3">
+          <input type="email" class="form-control me-2" placeholder="Enter your email address">
+          <button class="btn btn-primary">Subscribe</button>
+        </form>
+
+        <h6 class="fw-bold">Stay Connected</h6>
+        <div class="d-flex gap-3">
+          <a href="#" class="text-white fs-5"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="text-white fs-5"><i class="bi bi-twitter"></i></a>
+          <a href="#" class="text-white fs-5"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="text-white fs-5"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="text-center mt-4 border-top pt-3 small text-white-50">
+      <p class="mb-1">&copy; 2025 All Rights Reserved.</p>
+      <p class="mb-1">Ecommerce Software by <span class="text-white">BigCommerce</span>.</p>
+      <p class="mb-0">BigCommerce Themes by <span class="text-white">Sana Ullah</span>.</p>
+    </div>
+  </div>
+</footer>
+
+
 
 </body>
 </html>
